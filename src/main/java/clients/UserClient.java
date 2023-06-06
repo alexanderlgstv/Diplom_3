@@ -14,7 +14,7 @@ public class UserClient extends Client {
     private static final String LOGIN = "auth/login/";
     private static final String DELETE = "auth/user/";
 
-    @Step("User Registration")
+    @Step("Регистрация пользователя")
     public Response createUser(User user) {
         return (Response) given()
                 .spec(getSpecSettings())
@@ -25,7 +25,7 @@ public class UserClient extends Client {
                 .extract();
     }
 
-    @Step("User Login")
+    @Step("Логин пользователя")
     public static Response login(Credentials credentials) {
         return (Response) given()
                 .spec(getSpecSettings())
