@@ -10,8 +10,8 @@ import org.junit.Test;
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.Assert.*;
 
-public class SignUpTest {
-    UserClient userClient;
+public class SignUpTest{
+    private UserClient userClient;
 
     protected String name = UserGenerator.getUser().getName();
     protected String email = UserGenerator.getUser().getEmail();

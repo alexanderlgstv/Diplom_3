@@ -3,7 +3,6 @@ package pageobjects;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.Condition;
 import com.mifmif.common.regex.Main;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.How;
 import io.qameta.allure.Step;
 import org.openqa.selenium.support.FindBy;

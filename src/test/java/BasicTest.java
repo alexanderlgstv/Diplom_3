@@ -1,7 +1,4 @@
-import clients.Client;
 import com.codeborne.selenide.WebDriverRunner;
-import driver.DefaultDriver;
-import pageobjects.MainPage;
 import models.User;
 import clients.UserClient;
 import models.Credentials;
@@ -16,18 +13,35 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import static com.codeborne.selenide.Selenide.open;
-
 public class BasicTest {
     protected static final User user = UserGenerator.getUser();
 
-    UserClient userClient;
+    private static final String URL = "https://stellarburgers.nomoreparties.site/";
 
-    private MainPage mainPage;
+    public UserClient userClient;
+
+    public WebDriver driver;
+
+    private WebDriver getDriver(String browserName) {
+        if ("chrome".equals(browserName)) {
+            WebDriverManager.chromedriver().setup();
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--remote-allow-origins=*", "start-maximized");
+            return driver = new ChromeDriver(options);
+        } else if ("yandex".equals(browserName)) {
+            ChromeOptions options = new ChromeOptions();
+            System.setProperty("webdriver.chrome.driver", "C:\\cygwin64\\home\\lgstv\\Diplom\\Diplom_3\\src\\main\\resources\\yandexdriver.exe");
+            options.setBinary("C:\\Users\\lgstv\\AppData\\Local\\Yandex\\YandexBrowser\\Application\\browser.exe");
+            options.addArguments("--remote-allow-origins=*", "start-maximized");
+            return driver = new ChromeDriver(options);
+        } else {
+            throw new IllegalArgumentException("Тестирование в данном браузере невозможно");
+        }
+    }
 
     public void setUp() {
-        new DefaultDriver().startBrowser();
-        mainPage = open(MainPage.MAIN_PAGE_URL, MainPage.class);
+        driver = getDriver("chrome");   //запуск в выбранном браузере
+        driver.get(URL);
     }
 
     @Before
@@ -46,5 +60,6 @@ public class BasicTest {
         if (response.body().jsonPath().getString("accessToken") != null) {
             userClient.delete(response);
         }
+        driver.quit();
     }
 }

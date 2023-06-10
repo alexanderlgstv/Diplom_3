@@ -87,7 +87,8 @@ public class SignInPage {
 
     @Step("Ввести данные пользователя")
     public MainPage SignUpUser(String email, String password) {
-        Selenide.sleep(250);
+        emailField.shouldBe(Condition.visible);
+        passwordField.shouldBe(Condition.visible);
         setEmail(email);
         setPassword(password);
         return clickSignInButton();
